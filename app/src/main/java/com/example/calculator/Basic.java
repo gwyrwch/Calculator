@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.function.DoubleUnaryOperator;
 
 
 public class Basic extends Fragment implements View.OnClickListener {
-    private TextView mainTextView;
     private View v;
 
     OnExpressionPass dataPasser;
@@ -57,95 +57,82 @@ public class Basic extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_basic, container, false);
-        v.findViewById(R.id.button_add);
 
-        for (int i = 0; i <  10; i++) {
-            System.out.println(buttonIds.size());
-        }
         for (int i = 0; i < buttonIds.size(); i++) {
             int id = this.getResources().getIdentifier(buttonIds.get(i), "id", getActivity().getPackageName());
             Button b = v.findViewById(id);
-            System.out.println(b  == null);
-            System.out.println(b);
             b.setOnClickListener(this);
         }
-
-
-//        mainTextView = getActivity().findViewById(R.id.mainTextView);
-
         return v;
-    }
-
-
-    public interface OnExpressionPass {
-        public void onExpressionPass(String Expression);
     }
 
     @Override
     public void onClick(View v) {
+        Calculator calculator = dataPasser.getCalculator();
         switch (v.getId()) {
             case R.id.button_one:
-                dataPasser.onExpressionPass("1");
+                calculator.onDigitPass("1");
                 break;
             case R.id.button_two:
-                dataPasser.onExpressionPass("2");
+                calculator.onDigitPass("2");
                 break;
             case R.id.button_three:
-                dataPasser.onExpressionPass("3");
+                calculator.onDigitPass("3");
                 break;
             case R.id.button_four:
-                dataPasser.onExpressionPass("4");
+                calculator.onDigitPass("4");
                 break;
             case R.id.button_five:
-                dataPasser.onExpressionPass("5");
+                calculator.onDigitPass("5");
                 break;
             case R.id.button_six:
-                dataPasser.onExpressionPass("6");
+                calculator.onDigitPass("6");
                 break;
             case R.id.button_seven:
-                dataPasser.onExpressionPass("7");
+                calculator.onDigitPass("7");
                 break;
             case R.id.button_eight:
-                dataPasser.onExpressionPass("8");
+                calculator.onDigitPass("8");
                 break;
             case R.id.button_nine:
-                dataPasser.onExpressionPass("9");
+                calculator.onDigitPass("9");
                 break;
             case R.id.button_zero:
-                dataPasser.onExpressionPass("0");
+                calculator.onDigitPass("0");
                 break;
             case R.id.button_div:
-                dataPasser.onExpressionPass("/");
+                calculator.onBinOpPass(BinOperation.DIVISION);
                 break;
             case R.id.button_mult:
-                dataPasser.onExpressionPass("*");
+                calculator.onBinOpPass(BinOperation.MULT);
                 break;
             case R.id.button_add:
-                dataPasser.onExpressionPass("+");
+                calculator.onBinOpPass(BinOperation.ADD);
                 break;
             case R.id.button_sub:
-                dataPasser.onExpressionPass("-");
+                calculator.onBinOpPass(BinOperation.SUB);
                 break;
             case R.id.button_period:
-                dataPasser.onExpressionPass(".");
+                calculator.onDigitPass(".");
                 break;
             case R.id.button_eq:
-                dataPasser.onExpressionPass("=");
+                calculator.onGetResult();
                 break;
             case R.id.button_ac:
-                dataPasser.onExpressionPass("ac");
+                calculator.onAllClear();
                 break;
             case R.id.button_percent:
-                dataPasser.onExpressionPass("%");
+                calculator.onBinOpPass(BinOperation.MOD);
                 break;
             case R.id.button_clear:
-                dataPasser.onExpressionPass("c");
+                calculator.onClear();
                 break;
             case R.id.button_sign:
-                dataPasser.onExpressionPass("+/-");
+                calculator.onUnOp(
+                        (DoubleUnaryOperator) x -> (-x)
+                );
                 break;
 
         }
     }
-
 }

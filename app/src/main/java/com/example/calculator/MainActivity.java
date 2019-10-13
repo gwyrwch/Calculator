@@ -7,15 +7,16 @@ import android.util.DisplayMetrics;
 
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements Basic.OnExpressionPass {
+public class MainActivity extends AppCompatActivity implements OnExpressionPass {
     private TextView mainTextView;
+    private Calculator calculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        calculator = new Calculator();
 
         int width = getWindowManager().getDefaultDisplay().getWidth() / 7;
         int height = getWindowManager().getDefaultDisplay().getHeight() / 4;
@@ -36,13 +37,12 @@ public class MainActivity extends AppCompatActivity implements Basic.OnExpressio
     }
 
     @Override
-    public void onExpressionPass(String expression) {
-        mainTextView.setText(expression);
-
-        System.out.println(mainTextView.getText());
+    public void onExpressionPass() {
+//        mainTextView.setText();
     }
 
-
-
-
+    @Override
+    public Calculator getCalculator() {
+        return calculator;
+    }
 }

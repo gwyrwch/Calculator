@@ -29,6 +29,10 @@ android {
 //            applicationId = "com.example.calculator.full"
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
