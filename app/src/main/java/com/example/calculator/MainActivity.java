@@ -1,20 +1,14 @@
 package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.webkit.ConsoleMessage;
-import android.widget.TextView;
 
-import java.io.Console;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements Basic.OnExpressionPass {
     private TextView mainTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

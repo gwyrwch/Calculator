@@ -4,18 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/main_activity">
+    tools:context="com.example.calculator.demo.DemoMainActivity">
 
     <fragment
         android:id="@+id/basic"
         android:name="com.example.calculator.Basic"
         android:layout_width="match_parent"
-        android:layout_height="365dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_basic">
-
     </fragment>
 
     <TextView
@@ -29,5 +27,4 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/basic"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

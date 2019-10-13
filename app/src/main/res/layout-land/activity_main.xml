@@ -10,11 +10,23 @@
     <fragment
         android:id="@+id/basic"
         android:name="com.example.calculator.Basic"
-        android:layout_width="match_parent"
-        android:layout_height="365dp"
+        android:layout_width="368dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:layout="@layout/fragment_basic">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/scientific"
+        android:name="com.example.calculator.ScientificModeFragment"
+        android:layout_width="368dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/basic"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_scientific_mode">
 
     </fragment>
 
