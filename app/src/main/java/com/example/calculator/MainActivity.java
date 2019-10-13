@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements Basic.OnExpressio
 
 
 
-        int width = getWindowManager().getDefaultDisplay().getWidth() ;
-        int height = getWindowManager().getDefaultDisplay().getHeight() ;
+        int width = getWindowManager().getDefaultDisplay().getWidth() / 7;
+        int height = getWindowManager().getDefaultDisplay().getHeight() / 4;
 
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         height = (int) ((height/displayMetrics.density)+0.5);

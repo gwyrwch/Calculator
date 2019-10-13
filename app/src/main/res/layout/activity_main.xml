@@ -10,8 +10,8 @@
     <fragment
         android:id="@+id/basic"
         android:name="com.example.calculator.Basic"
-        android:layout_width="393dp"
-        android:layout_height="367.8dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_basic">

@@ -20,5 +20,29 @@
     <string name="clear">c</string>
     <string name="sign">+/-</string>
     <string name="all_clear">ac</string>
+    
+    <string name="open_bracket">(</string>
+    <string name="close_bracket">)</string>
+    <string name="rand">rand</string>
+    <string name="fact">x!</string>
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="tan">tan</string>
+    <string name="pi">π</string>
+    <string name="exp">exp</string>
+    <string name="ln">ln</string>
+    <string name="lg">lg</string>
+    <string name="log2">log2</string>
+    <string name="sqrt">√x</string>
+    <string name="cubic_root">3√x</string>
+    <string name="n_root">n√x</string>
+    <string name="inverse">1/x</string>
+    <string name="sinh">sinh</string>
+    <string name="cosh">cosh</string>
+    <string name="tanh">tanh</string>
+    <string name="ten_power">10^x</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 

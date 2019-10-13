@@ -129,6 +129,21 @@ public class Basic extends Fragment implements View.OnClickListener {
             case R.id.button_period:
                 dataPasser.onExpressionPass(".");
                 break;
+            case R.id.button_eq:
+                dataPasser.onExpressionPass("=");
+                break;
+            case R.id.button_ac:
+                dataPasser.onExpressionPass("ac");
+                break;
+            case R.id.button_percent:
+                dataPasser.onExpressionPass("%");
+                break;
+            case R.id.button_clear:
+                dataPasser.onExpressionPass("c");
+                break;
+            case R.id.button_sign:
+                dataPasser.onExpressionPass("+/-");
+                break;
 
         }
     }
