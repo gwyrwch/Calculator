@@ -40,6 +40,8 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
             add("button_cbrt");
             add("button_n_root");
             add("button_power");
+            add("button_exp");
+            add("button_rand");
         }
 
     };
@@ -109,7 +111,21 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
                 calculator.onClosingBracket();
                 break;
             case R.id.button_fact:
-                //todo: write method to eval factorial
+                calculator.onUnOp(
+                    x -> {
+                        long y = (long)(x + 0.5);
+                        if (Math.abs(x - y) < 1e-12) {
+                            if (y > 103) {
+                                return Double.POSITIVE_INFINITY;
+                            }
+                            double res = 1;
+                            for (int i = 1; i <= y; i++)
+                                res *= i;
+                            return res;
+                        }
+                        return Double.NaN;
+                    }
+                );
                 break;
             case R.id.button_inverse:
                 calculator.onUnOp(

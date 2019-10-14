@@ -26,7 +26,7 @@ public class Calculator {
         inBracketsOprs = new ArrayList<>();
 
         currentOperation = BinOperation.NOTHING; inBracketsOperation = BinOperation.NOTHING;
-        currentState = FSM.FIRST_OPERAND;
+        currentState = FSM.FINISHED;
         firstOperand = "0";
         wasConstant = false;
     }
@@ -46,6 +46,10 @@ public class Calculator {
     public void onDigitPass(String digit) {
         Log.d(TAG, "passed digit " + digit + " state = " + currentState.toString());
         switch (currentState) {
+            case FINISHED:
+                firstOperand = digit;
+                currentState = FSM.FIRST_OPERAND;
+                break;
             case FIRST_OPERAND:
                 if (wasConstant) {
                     firstOperand = "";
@@ -103,6 +107,7 @@ public class Calculator {
     public void onBinOpPass(BinOperation operation) {
         Log.d(TAG, "bin operation " + operation.toString() + " state = " + currentState.toString());
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
                 currentOperation = operation;
                 currentState = FSM.FIRST_OPERATION;
@@ -130,7 +135,7 @@ public class Calculator {
                     currentState = FSM.FIRST_OPERATION;
                 } else {
                     firstOperand =
-                        Double.toString(applyBinOp(currentOperation, parse(firstBrOperand), parse(secondOperand)));
+                        Double.toString(applyBinOp(currentOperation, parse(firstOperand), parse(secondOperand)));
                     secondOperand = "";
                     currentOperation = operation;
 
@@ -145,6 +150,7 @@ public class Calculator {
         String strConstant = Double.toString(constant);
         wasConstant = true;
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
                 firstOperand = strConstant;
                 break;
@@ -189,6 +195,7 @@ public class Calculator {
     public void onUnOp(DoubleUnaryOperator operator) {
         Log.d(TAG, "passed unary operation " + " state = " + currentState.toString());
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
                 firstOperand = ((Double)operator.applyAsDouble(parse(firstOperand))).toString(); // todo change minsdk
                 break;
@@ -208,9 +215,65 @@ public class Calculator {
         }
     }
 
-    public void onOpenBracket(){}
+    public void onOpenBracket() {
+        switch (currentState) {
+            case FINISHED:
+            case FIRST_OPERAND:
+                if (firstOperand.equals("0")) {
+                    currentOperation = BinOperation.ADD;
+                    currentState = FSM.FIRST_IN_BRACKET_OPERAND;
+                }
+                break;
+            case FIRST_OPERATION:
+                firstBrOperand = "0";
+                currentState = FSM.FIRST_IN_BRACKET_OPERAND;
+                break;
+            case FIRST_IN_BRACKET_OPERAND:
+            case SECOND_OPERAND:
+            case SECOND_IN_BRACKET_OPERAND:
+            case IN_BRACKET_OPERATION:
+                break;
+        }
+    }
 
-    public void onClosingBracket(){}
+    public void onClosingBracket() {
+        double result;
+        switch (currentState) {
+            case FINISHED:
+            case FIRST_OPERAND:
+            case SECOND_OPERAND:
+            case FIRST_OPERATION:
+                break;
+            case IN_BRACKET_OPERATION:
+            case FIRST_IN_BRACKET_OPERAND:
+            case SECOND_IN_BRACKET_OPERAND:
+                if (currentState == FSM.SECOND_IN_BRACKET_OPERAND) {
+                    inBracketsExp.add(applyBinOp(inBracketsOperation, parse(firstBrOperand), parse(secondBrOperand)));
+                } else {
+                    inBracketsExp.add(parse(firstBrOperand));
+                }
+
+                result = eval(inBracketsExp, inBracketsOprs);
+
+                if (lowPriority(currentOperation)) {
+                    operators.add(currentOperation);
+                    expression.add(parse(firstOperand));
+
+                    firstOperand = Double.toString(result);
+                } else {
+                    firstOperand =
+                            Double.toString(applyBinOp(currentOperation, parse(firstOperand), result));
+                }
+                currentState = FSM.FINISHED;
+                break;
+        }
+
+        inBracketsOperation = BinOperation.NOTHING;
+        firstBrOperand = "";
+        secondBrOperand = "";
+        inBracketsExp.clear();
+        inBracketsOprs.clear();
+    }
 
     public void onAllClear() {
         Reset();
@@ -219,6 +282,7 @@ public class Calculator {
     public void onClear() {
         // todo: refactor (you have 1 + 2 tap c and get 1 + and can again tap c and get 1
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
                 firstOperand = "0";
                 break;
@@ -245,6 +309,7 @@ public class Calculator {
     public void onGetResult() {
         Log.d(TAG, "GET result " + " state = " + currentState.toString());
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
                 expression.add(parse(firstOperand));
                 break;
@@ -310,6 +375,7 @@ public class Calculator {
     public String display() {
         String result = "";
         switch (currentState) {
+            case FINISHED:
             case FIRST_OPERAND:
             case FIRST_OPERATION:
                 result = firstOperand;
@@ -325,6 +391,6 @@ public class Calculator {
                 result = secondOperand;
                 break;
         }
-        return Double.toString(parse(result));
+        return result;
     }
 }

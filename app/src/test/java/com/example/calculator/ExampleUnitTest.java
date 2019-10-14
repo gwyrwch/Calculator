@@ -24,7 +24,22 @@ public class ExampleUnitTest {
         calculator.onDigitPass("2");
         calculator.onBinOpPass(BinOperation.DIVISION);
         calculator.onDigitPass("6");
+        calculator.onBinOpPass(BinOperation.ADD);
         calculator.onGetResult();
         assertEquals(Double.parseDouble(calculator.display()), 1.0/3.0, 1e-9);
+    }
+
+    @Test
+    public void brackets() {
+        Calculator calculator = new Calculator();
+        calculator.onDigitPass("2");
+        calculator.onBinOpPass(BinOperation.MULT);
+        calculator.onOpenBracket();
+        calculator.onDigitPass("2");
+        calculator.onBinOpPass(BinOperation.ADD);
+        calculator.onDigitPass("2");
+        calculator.onClosingBracket();
+        calculator.onGetResult();
+        assertEquals(Double.parseDouble(calculator.display()), 8, 1e-9);
     }
 }
