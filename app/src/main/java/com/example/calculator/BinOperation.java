@@ -6,5 +6,8 @@ public enum BinOperation {
     SUB,
     DIVISION,
     MULT,
-    MOD;
+    MOD,
+    NROOT,
+    NPOWER
+
 }

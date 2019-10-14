@@ -126,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_exp" />
 
     <Button
-        android:id="@+id/button_cubic"
+        android:id="@+id/button_cbrt"
         style="@style/ButtonLand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/n_root"
-        app:layout_constraintStart_toEndOf="@+id/button_cubic"
+        app:layout_constraintStart_toEndOf="@+id/button_cbrt"
         app:layout_constraintTop_toBottomOf="@+id/button_ln" />
 
     <Button
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:text="@string/cosh"
         app:layout_constraintStart_toEndOf="@+id/button_sinh"
-        app:layout_constraintTop_toBottomOf="@+id/button_cubic" />
+        app:layout_constraintTop_toBottomOf="@+id/button_cbrt" />
 
     <Button
         android:id="@+id/button_power"

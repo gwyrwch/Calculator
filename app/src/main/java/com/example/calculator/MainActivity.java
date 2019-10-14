@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
 
     @Override
     public void onExpressionPass() {
-//        mainTextView.setText();
+        mainTextView.setText(calculator.display());
     }
 
     @Override
