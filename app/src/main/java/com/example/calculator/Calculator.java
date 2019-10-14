@@ -1,6 +1,5 @@
 package com.example.calculator;
 
-import android.icu.text.SymbolTable;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -12,15 +11,11 @@ public class Calculator {
     private ArrayList<Double> expression, inBracketsExp;
     private ArrayList<BinOperation> operators, inBracketsOprs;
     private String firstOperand, secondOperand, firstBrOperand, secondBrOperand;
-    private BinOperation currentOperator, inBracketsOperator;
+    private BinOperation currentOperation, inBracketsOperation;
+    private double eps = 1e-19; //todo: -19 to 18 ????
     FSM currentState;
 
 
-//    int priority(int operator) {
-////        switch (operator) {
-////
-////        }
-//    }
 
     void Reset() {
         expression = new ArrayList<>();
@@ -28,7 +23,7 @@ public class Calculator {
         operators = new ArrayList<>();
         inBracketsOprs = new ArrayList<>();
 
-        currentOperator = BinOperation.NOTHING; inBracketsOperator = BinOperation.NOTHING;
+        currentOperation = BinOperation.NOTHING; inBracketsOperation = BinOperation.NOTHING;
         currentState = FSM.FIRST_OPERAND;
         firstOperand = "0";
     }
@@ -48,13 +43,16 @@ public class Calculator {
     public void onDigitPass(String digit) {
         switch (currentState) {
             case FIRST_OPERAND:
+                if (parse(firstOperand) - Math.PI <= eps || parse(firstOperand) - Math.E <= eps) {
+                    firstOperand = "0";
+                }
                 firstOperand += digit;
                 break;
             case FIRST_OPERATION:
-                if (lowPriority(currentOperator)) {
-                    operators.add(currentOperator);
+                if (lowPriority(currentOperation)) {
+                    operators.add(currentOperation);
                     expression.add(parse(firstOperand));
-                    currentOperator = BinOperation.NOTHING;
+                    currentOperation = BinOperation.NOTHING;
 
                     firstOperand = digit;
                     currentState = FSM.FIRST_OPERAND;
@@ -67,10 +65,10 @@ public class Calculator {
                 firstBrOperand += digit;
                 break;
             case IN_BRACKET_OPERATION:
-                if (lowPriority(inBracketsOperator)) {
-                    inBracketsOprs.add(inBracketsOperator);
+                if (lowPriority(inBracketsOperation)) {
+                    inBracketsOprs.add(inBracketsOperation);
                     inBracketsExp.add(parse(firstBrOperand));
-                    inBracketsOperator = BinOperation.NOTHING;
+                    inBracketsOperation = BinOperation.NOTHING;
 
                     firstBrOperand = digit;
                     currentState = FSM.FIRST_IN_BRACKET_OPERAND;
@@ -91,35 +89,40 @@ public class Calculator {
     public void onBinOpPass(BinOperation operation) {
         switch (currentState) {
             case FIRST_OPERAND:
-                currentOperator = operation;
+                currentOperation = operation;
                 currentState = FSM.FIRST_OPERATION;
                 break;
             case FIRST_OPERATION:
-                currentOperator = operation;
+                currentOperation = operation;
                 break;
             case FIRST_IN_BRACKET_OPERAND:
-                inBracketsOperator = operation;
+                inBracketsOperation = operation;
                 currentState = FSM.IN_BRACKET_OPERATION;
                 break;
             case IN_BRACKET_OPERATION:
-                inBracketsOperator = operation;
+                inBracketsOperation = operation;
                 break;
             case SECOND_IN_BRACKET_OPERAND:
                 break;
             case SECOND_OPERAND:
-                if (lowPriority(currentOperator)) {
-                    operators.add(currentOperator);
+                if (lowPriority(currentOperation)) {
+                    operators.add(currentOperation);
                     expression.add(parse(firstOperand));
 
                     firstOperand = secondOperand;
-                    currentOperator = operation;
+                    currentOperation = operation;
                     secondOperand = "";
                     currentState = FSM.FIRST_OPERATION;
                 } else {
+                    System.out.println(firstBrOperand);
+                    System.out.println(secondBrOperand);
+                    System.out.println(currentOperation);
                     firstOperand =
-                            Double.toString(applyBinOp(currentOperator, parse(firstBrOperand), parse(secondOperand)));
+                        Double.toString(applyBinOp(currentOperation, parse(firstBrOperand), parse(secondOperand)));
                     secondOperand = "";
-                    currentOperator = operation;
+                    currentOperation = operation;
+
+//                    currentState = FSM.FIRST_OPERATION; todo:
                 }
                 break;
         }
@@ -159,7 +162,31 @@ public class Calculator {
         Reset();
     }
 
-    public void onClear() {}
+    public void onClear() {
+        // todo: refactor (you have 1 + 2 tap c and get 1 + and can again tap c and get 1
+        switch (currentState) {
+            case FIRST_OPERAND:
+                firstOperand = "0";
+                break;
+            case FIRST_OPERATION:
+                currentOperation = BinOperation.NOTHING;
+                currentState = FSM.FIRST_OPERAND;
+                break;
+            case FIRST_IN_BRACKET_OPERAND:
+                firstBrOperand = "";
+                break;
+            case IN_BRACKET_OPERATION:
+                inBracketsOperation = BinOperation.NOTHING;
+                currentState = FSM.SECOND_IN_BRACKET_OPERAND;
+                break;
+            case SECOND_IN_BRACKET_OPERAND:
+                secondBrOperand = "";
+                break;
+            case SECOND_OPERAND:
+                secondOperand = "";
+                break;
+        }
+    }
 
     public void onGetResult() {
         switch (currentState) {
@@ -167,7 +194,7 @@ public class Calculator {
                 expression.add(parse(firstOperand));
                 break;
             case FIRST_OPERATION:
-                currentOperator = BinOperation.NOTHING;
+                currentOperation = BinOperation.NOTHING;
                 expression.add(parse(firstOperand));
                 break;
             case FIRST_IN_BRACKET_OPERAND:
@@ -177,12 +204,12 @@ public class Calculator {
                 onGetResult();
                 return;
             case SECOND_OPERAND:
-                if (lowPriority(currentOperator)) {
+                if (lowPriority(currentOperation)) {
                     expression.add(parse(firstOperand));
-                    operators.add(currentOperator);
+                    operators.add(currentOperation);
                     expression.add(parse(secondOperand));
                 } else {
-                    expression.add(applyBinOp(currentOperator, parse(firstBrOperand), parse(secondOperand)));
+                    expression.add(applyBinOp(currentOperation, parse(firstOperand), parse(secondOperand)));
                 }
                 break;
         }

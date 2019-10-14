@@ -2,6 +2,7 @@ package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         System.out.println("kek");
         System.out.println(width);
         System.out.println(height);
+
+//        App.Current.Resources[""] = new SolidColorBrush(Colors.Red); // Red for example
+    
+
 
     }
 

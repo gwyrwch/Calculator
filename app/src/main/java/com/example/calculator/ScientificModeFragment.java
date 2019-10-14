@@ -71,32 +71,32 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.button_sin:
                 calculator.onUnOp(
-                    Math::sin
+                    x -> Math.sin(Math.toRadians(x))
                 );
                 break;
             case R.id.button_cos:
                 calculator.onUnOp(
-                    Math::cos
+                    x -> Math.cos(Math.toRadians(x))
                 );
                 break;
             case R.id.button_tan:
                 calculator.onUnOp(
-                    Math::tan
+                    x -> Math.tan(Math.toRadians(x))
                 );
                 break;
             case R.id.button_sinh:
                 calculator.onUnOp(
-                    Math::sinh
+                    x -> Math.sinh(Math.toRadians(x))
                 );
                 break;
             case R.id.button_cosh:
                 calculator.onUnOp(
-                    Math::cosh
+                    x -> Math.cosh(Math.toRadians(x))
                 );
                 break;
             case R.id.button_tanh:
                 calculator.onUnOp(
-                    Math::tanh
+                    x -> Math.tanh(Math.toRadians(x))
                 );
                 break;
             case R.id.button_pi:
@@ -154,5 +154,8 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
                 calculator.onBinOpPass(BinOperation.NPOWER);
                 break;
         }
+
+        dataPasser.onExpressionPass();
+
     }
 }
