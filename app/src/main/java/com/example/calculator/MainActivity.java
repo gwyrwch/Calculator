@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         System.out.println("kek");
         System.out.println(width);
         System.out.println(height);
+
     }
 
     @Override
