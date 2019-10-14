@@ -1,21 +1,23 @@
 package com.example.calculator;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.function.DoubleUnaryOperator;
+import java.util.logging.Logger;
 
 public class Calculator {
     private ArrayList<Double> expression, inBracketsExp;
     private ArrayList<BinOperation> operators, inBracketsOprs;
     private String firstOperand, secondOperand, firstBrOperand, secondBrOperand;
     private BinOperation currentOperation, inBracketsOperation;
-    private double eps = 1e-19; //todo: -19 to 18 ????
     FSM currentState;
+    private boolean wasConstant;
 
-
+    private static final String TAG = "Calculator";
 
     void Reset() {
         expression = new ArrayList<>();
@@ -26,6 +28,7 @@ public class Calculator {
         currentOperation = BinOperation.NOTHING; inBracketsOperation = BinOperation.NOTHING;
         currentState = FSM.FIRST_OPERAND;
         firstOperand = "0";
+        wasConstant = false;
     }
 
     public Calculator() {
@@ -40,18 +43,13 @@ public class Calculator {
         return Double.parseDouble(s);
     }
 
-    private String CheckOperandForConstant(String operand) {
-        if (parse(operand) - Math.PI <= eps || parse(operand) - Math.E <= eps) {
-            operand = "0"; // todo: but if it isn't first operator needs to be ""
-        }
-
-        return operand;
-    }
-
-    public void onDigitPass(String digit) { //fixme: refactor this method with CheckOperandForConstant calls
+    public void onDigitPass(String digit) {
+        Log.d(TAG, "passed digit " + digit + " state = " + currentState.toString());
         switch (currentState) {
             case FIRST_OPERAND:
-                firstOperand = CheckOperandForConstant(firstOperand);
+                if (wasConstant) {
+                    firstOperand = "";
+                }
                 firstOperand += digit;
                 break;
             case FIRST_OPERATION:
@@ -68,6 +66,9 @@ public class Calculator {
                 }
                 break;
             case FIRST_IN_BRACKET_OPERAND:
+                if (wasConstant) {
+                    firstBrOperand = "";
+                }
                 firstBrOperand += digit;
                 break;
             case IN_BRACKET_OPERATION:
@@ -84,15 +85,23 @@ public class Calculator {
                 }
                 break;
             case SECOND_IN_BRACKET_OPERAND:
+                if (wasConstant) {
+                    secondBrOperand = "";
+                }
                 secondBrOperand += digit;
                 break;
             case SECOND_OPERAND:
+                if (wasConstant) {
+                    secondOperand = "";
+                }
                 secondOperand += digit;
                 break;
         }
+        wasConstant = false;
     }
 
     public void onBinOpPass(BinOperation operation) {
+        Log.d(TAG, "bin operation " + operation.toString() + " state = " + currentState.toString());
         switch (currentState) {
             case FIRST_OPERAND:
                 currentOperation = operation;
@@ -119,20 +128,22 @@ public class Calculator {
                     currentOperation = operation;
                     secondOperand = "";
                     currentState = FSM.FIRST_OPERATION;
-                } else { ;
+                } else {
                     firstOperand =
                         Double.toString(applyBinOp(currentOperation, parse(firstBrOperand), parse(secondOperand)));
                     secondOperand = "";
                     currentOperation = operation;
 
-//                    currentState = FSM.FIRST_OPERATION; fixme: may be bug ?
+                    currentState = FSM.FIRST_OPERATION;
                 }
                 break;
         }
     }
 
     public void onMathConstantPass(double constant) {
+        Log.d(TAG, "passed const" + Double.toString(constant) + " state = " + currentState.toString());
         String strConstant = Double.toString(constant);
+        wasConstant = true;
         switch (currentState) {
             case FIRST_OPERAND:
                 firstOperand = strConstant;
@@ -148,7 +159,6 @@ public class Calculator {
                 } else {
                     secondOperand = strConstant;
                     currentState = FSM.SECOND_OPERAND;
-                    // fixme: maybe bug (:
                 }
             case FIRST_IN_BRACKET_OPERAND:
                 firstBrOperand = strConstant;
@@ -177,6 +187,7 @@ public class Calculator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onUnOp(DoubleUnaryOperator operator) {
+        Log.d(TAG, "passed unary operation " + " state = " + currentState.toString());
         switch (currentState) {
             case FIRST_OPERAND:
                 firstOperand = ((Double)operator.applyAsDouble(parse(firstOperand))).toString(); // todo change minsdk
@@ -232,6 +243,7 @@ public class Calculator {
     }
 
     public void onGetResult() {
+        Log.d(TAG, "GET result " + " state = " + currentState.toString());
         switch (currentState) {
             case FIRST_OPERAND:
                 expression.add(parse(firstOperand));

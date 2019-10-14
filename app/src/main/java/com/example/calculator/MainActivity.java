@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         System.out.println(height);
 
 //        App.Current.Resources[""] = new SolidColorBrush(Colors.Red); // Red for example
-    
-
 
     }
 
