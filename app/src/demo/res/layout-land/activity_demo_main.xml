@@ -9,15 +9,16 @@
     <fragment
         android:id="@+id/basic"
         android:name="com.example.calculator.Basic"
-        android:layout_width="match_parent"
-        android:layout_height="365dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_basic"></fragment>
+        tools:layout="@layout/fragment_basic">
+    </fragment>
 
     <TextView
         android:id="@+id/mainTextView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:width="100dp"
         android:text="@string/zero"
@@ -25,6 +26,5 @@
         android:textColor="#A139AEDC"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/basic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
