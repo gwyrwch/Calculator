@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ScientificModeFragment extends Fragment implements View.OnClickListener {
     private View v;
 
-    OnExpressionPass dataPasser;
+    private OnExpressionPass dataPasser;
 
     private static final ArrayList<String> buttonIds = new ArrayList<String>() {
         {
@@ -43,7 +43,6 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
         }
 
     };
-
 
     @Override
     public void onAttach(Context context) {
@@ -156,5 +155,4 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
                 break;
         }
     }
-
 }

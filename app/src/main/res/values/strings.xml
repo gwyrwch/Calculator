@@ -40,7 +40,7 @@
     <string name="sinh">sinh</string>
     <string name="cosh">cosh</string>
     <string name="tanh">tanh</string>
-    <string name="power">10^x</string>
+    <string name="power">x^n</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
