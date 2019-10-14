@@ -40,12 +40,18 @@ public class Calculator {
         return Double.parseDouble(s);
     }
 
-    public void onDigitPass(String digit) {
+    private String CheckOperandForConstant(String operand) {
+        if (parse(operand) - Math.PI <= eps || parse(operand) - Math.E <= eps) {
+            operand = "0"; // todo: but if it isn't first operator needs to be ""
+        }
+
+        return operand;
+    }
+
+    public void onDigitPass(String digit) { //fixme: refactor this method with CheckOperandForConstant calls
         switch (currentState) {
             case FIRST_OPERAND:
-                if (parse(firstOperand) - Math.PI <= eps || parse(firstOperand) - Math.E <= eps) {
-                    firstOperand = "0";
-                }
+                firstOperand = CheckOperandForConstant(firstOperand);
                 firstOperand += digit;
                 break;
             case FIRST_OPERATION:
@@ -113,23 +119,60 @@ public class Calculator {
                     currentOperation = operation;
                     secondOperand = "";
                     currentState = FSM.FIRST_OPERATION;
-                } else {
-                    System.out.println(firstBrOperand);
-                    System.out.println(secondBrOperand);
-                    System.out.println(currentOperation);
+                } else { ;
                     firstOperand =
                         Double.toString(applyBinOp(currentOperation, parse(firstBrOperand), parse(secondOperand)));
                     secondOperand = "";
                     currentOperation = operation;
 
-//                    currentState = FSM.FIRST_OPERATION; todo:
+//                    currentState = FSM.FIRST_OPERATION; fixme: may be bug ?
                 }
                 break;
         }
     }
 
     public void onMathConstantPass(double constant) {
+        String strConstant = Double.toString(constant);
+        switch (currentState) {
+            case FIRST_OPERAND:
+                firstOperand = strConstant;
+                break;
+            case FIRST_OPERATION:
+                if (lowPriority(currentOperation)) {
+                    operators.add(currentOperation);
+                    expression.add(parse(firstOperand));
+                    currentOperation = BinOperation.NOTHING;
 
+                    firstOperand = strConstant;
+                    currentState = FSM.FIRST_OPERAND;
+                } else {
+                    secondOperand = strConstant;
+                    currentState = FSM.SECOND_OPERAND;
+                    // fixme: maybe bug (:
+                }
+            case FIRST_IN_BRACKET_OPERAND:
+                firstBrOperand = strConstant;
+                break;
+            case IN_BRACKET_OPERATION:
+                if (lowPriority(inBracketsOperation)) {
+                    inBracketsOprs.add(inBracketsOperation);
+                    inBracketsExp.add(parse(firstBrOperand));
+                    inBracketsOperation = BinOperation.NOTHING;
+
+                    firstBrOperand = strConstant;
+                    currentState = FSM.FIRST_IN_BRACKET_OPERAND;
+                } else {
+                    secondBrOperand = strConstant;
+                    currentState = FSM.SECOND_IN_BRACKET_OPERAND;
+                }
+                break;
+            case SECOND_IN_BRACKET_OPERAND:
+                secondBrOperand = strConstant;
+                break;
+            case SECOND_OPERAND:
+                secondOperand = strConstant;
+                break;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
