@@ -81,7 +81,7 @@
 
     <Button
         android:id="@+id/button_div"
-        style="@style/Button"
+        style="@style/OperationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/division"
@@ -90,7 +90,7 @@
 
     <Button
         android:id="@+id/button_add"
-        style="@style/Button"
+        style="@style/OperationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addition"
@@ -99,7 +99,7 @@
 
     <Button
         android:id="@+id/button_sub"
-        style="@style/Button"
+        style="@style/OperationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/subtraction"
@@ -126,7 +126,7 @@
 
     <Button
         android:id="@+id/button_mult"
-        style="@style/Button"
+        style="@style/OperationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/multiplication"
@@ -180,7 +180,7 @@
 
     <Button
         android:id="@+id/button_eq"
-        style="@style/Button"
+        style="@style/OperationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/equality"

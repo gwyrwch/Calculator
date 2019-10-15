@@ -5,7 +5,7 @@
     android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/digitBtnColor"
     tools:context=".MainActivity">
 
     <!--    <fragment-->
@@ -26,16 +26,18 @@
         android:layout_height="wrap_content"
         android:text="@string/zero"
         android:textAlignment="textEnd"
-        android:textColor="#A139AEDC"
+        android:textColor="@color/textColor"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_frame"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button_mode"
-        style="@style/Button"
+        style="@android:style/Widget.Holo.Light.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/digitBtnColor"
+        android:textColor="@color/textColor"
         android:text="@string/mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
