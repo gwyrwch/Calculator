@@ -1,16 +1,16 @@
 package com.example.calculator;
 
+import android.database.Observable;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.function.DoubleUnaryOperator;
-import java.util.logging.Logger;
+
 
 public class Calculator extends ViewModel {
     private ArrayList<Double> expression, inBracketsExp;
@@ -19,6 +19,8 @@ public class Calculator extends ViewModel {
     private BinOperation currentOperation, inBracketsOperation;
     FSM currentState;
     private boolean wasConstant;
+    MutableLiveData<String> currentDisplay;
+
 
     private static final String TAG = "Calculator";
     // todo: 45 sin then you can write digits
@@ -29,13 +31,17 @@ public class Calculator extends ViewModel {
         operators = new ArrayList<>();
         inBracketsOprs = new ArrayList<>();
 
-        currentOperation = BinOperation.NOTHING; inBracketsOperation = BinOperation.NOTHING;
+        currentOperation = BinOperation.NOTHING;
+        inBracketsOperation = BinOperation.NOTHING;
         currentState = FSM.FINISHED;
         firstOperand = "0";
         wasConstant = false;
+
+        currentDisplay.setValue("0");
     }
 
     public Calculator() {
+        currentDisplay = new MutableLiveData<>();
         Reset();
     }
 
@@ -140,7 +146,7 @@ public class Calculator extends ViewModel {
                     currentState = FSM.FIRST_OPERATION;
                 } else {
                     firstOperand =
-                        Double.toString(applyBinOp(currentOperation, parse(firstOperand), parse(secondOperand)));
+                            Double.toString(applyBinOp(currentOperation, parse(firstOperand), parse(secondOperand)));
                     secondOperand = "";
                     currentOperation = operation;
 
@@ -202,20 +208,20 @@ public class Calculator extends ViewModel {
         switch (currentState) {
             case FINISHED:
             case FIRST_OPERAND:
-                firstOperand = ((Double)operator.applyAsDouble(parse(firstOperand))).toString(); // todo change minsdk
+                firstOperand = ((Double) operator.applyAsDouble(parse(firstOperand))).toString(); // todo change minsdk
                 break;
             case FIRST_OPERATION:
                 break;
             case FIRST_IN_BRACKET_OPERAND:
-                firstBrOperand = ((Double)operator.applyAsDouble(parse(firstBrOperand))).toString();
+                firstBrOperand = ((Double) operator.applyAsDouble(parse(firstBrOperand))).toString();
                 break;
             case IN_BRACKET_OPERATION:
                 break;
             case SECOND_IN_BRACKET_OPERAND:
-                secondBrOperand = ((Double)operator.applyAsDouble(parse(secondBrOperand))).toString();
+                secondBrOperand = ((Double) operator.applyAsDouble(parse(secondBrOperand))).toString();
                 break;
             case SECOND_OPERAND:
-                secondOperand = ((Double)operator.applyAsDouble(parse(secondOperand))).toString();
+                secondOperand = ((Double) operator.applyAsDouble(parse(secondOperand))).toString();
                 break;
         }
     }
@@ -377,7 +383,8 @@ public class Calculator extends ViewModel {
         return result;
     }
 
-    public String display() {
+
+    public void display() {
         String result = "";
         switch (currentState) {
             case FINISHED:
@@ -396,6 +403,8 @@ public class Calculator extends ViewModel {
                 result = secondOperand;
                 break;
         }
-        return result;
+
+
+        currentDisplay.setValue(result);
     }
 }

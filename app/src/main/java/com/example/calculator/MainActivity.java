@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
@@ -19,12 +20,14 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     private Calculator calculator;
     private Fragment currentFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         calculator = ViewModelProviders.of(this).get(Calculator.class);
+
 
         // todo: make if with current activity orientation
         // todo: when changing orientation Activity recreates
@@ -69,13 +72,22 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     @Override
     protected void onResume() {
         super.onResume();
+
         mainTextView = findViewById(R.id.mainTextView);
-        mainTextView.setText(calculator.display());
+
+        calculator.currentDisplay.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                mainTextView.setText(s);
+            }
+        });
     }
 
     @Override
     public void onExpressionPass() {
-        mainTextView.setText(calculator.display());
+        calculator.display();
+        System.out.println(calculator.currentDisplay.getValue());
+
     }
 
     @Override
