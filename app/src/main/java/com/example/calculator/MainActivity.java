@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calculator = new Calculator();
+        calculator = ViewModelProviders.of(this).get(Calculator.class);
 
         // todo: make if with current activity orientation
         // todo: when changing orientation Activity recreates
@@ -48,11 +49,9 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
             Fragment newFragment;
             int id;
             if (currentFragment.getClass() == Basic.class) {
-                System.out.println("mda");
                 newFragment = new ScientificModeFragment();
                 id = R.id.fragment_frame;
             } else {
-                System.out.println("lol");
                 newFragment = new Basic();
                 id = R.id.fragment_frame;
             }
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     protected void onResume() {
         super.onResume();
         mainTextView = findViewById(R.id.mainTextView);
+        mainTextView.setText(calculator.display());
     }
 
     @Override
@@ -84,16 +84,4 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     }
 
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        savedInstanceState.putBoolean("MyBoolean", true);
-        savedInstanceState.putDouble("myDouble", 1.9);
-        savedInstanceState.putInt("MyInt", 1);
-        savedInstanceState.putString("MyString", "Welcome back to Android");
-        savedInstanceState.putStringArrayList("1", new ArrayList<String>());
-    }
 }

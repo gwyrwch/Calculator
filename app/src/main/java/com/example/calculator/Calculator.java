@@ -3,13 +3,16 @@ package com.example.calculator;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.ArrayRes;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.function.DoubleUnaryOperator;
 import java.util.logging.Logger;
 
-public class Calculator {
+public class Calculator extends ViewModel {
     private ArrayList<Double> expression, inBracketsExp;
     private ArrayList<BinOperation> operators, inBracketsOprs;
     private String firstOperand, secondOperand, firstBrOperand, secondBrOperand;
@@ -36,9 +39,6 @@ public class Calculator {
         Reset();
     }
 
-    public Calculator(ArrayList<Double> expression, ArrayList<Double> inBracketsExp) {
-
-    }
 
     private boolean lowPriority(BinOperation op) {
         return op == BinOperation.ADD || op == BinOperation.SUB;
