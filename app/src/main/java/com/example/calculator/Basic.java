@@ -1,20 +1,15 @@
 package com.example.calculator;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.function.DoubleUnaryOperator;
 
 
 public class Basic extends Fragment implements View.OnClickListener {
@@ -67,7 +62,7 @@ public class Basic extends Fragment implements View.OnClickListener {
         return v;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     public void onClick(View v) {
         Calculator calculator = dataPasser.getCalculator();

@@ -1,10 +1,7 @@
 package com.example.calculator;
 
-import android.database.Observable;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -202,7 +199,6 @@ public class Calculator extends ViewModel {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onUnOp(DoubleUnaryOperator operator) {
         Log.d(TAG, "passed unary operation " + " state = " + currentState.toString());
         switch (currentState) {

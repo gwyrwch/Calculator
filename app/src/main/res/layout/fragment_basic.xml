@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/button_eight"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eight"
@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/button_sign"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/button_period"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/period"
@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/button_one"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/one"
@@ -45,7 +45,7 @@
 
     <Button
         android:id="@+id/button_two"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/two"
@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/button_six"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/six"
@@ -63,7 +63,7 @@
 
     <Button
         android:id="@+id/button_zero"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/zero"
@@ -72,7 +72,7 @@
 
     <Button
         android:id="@+id/button_four"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/four"
@@ -108,7 +108,7 @@
 
     <Button
         android:id="@+id/button_three"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/three"
@@ -117,7 +117,7 @@
 
     <Button
         android:id="@+id/button_seven"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/seven"
@@ -135,7 +135,7 @@
 
     <Button
         android:id="@+id/button_five"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/five"
@@ -144,7 +144,7 @@
 
     <Button
         android:id="@+id/button_nine"
-        style="@style/Button"
+        style="@style/DigitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nine"

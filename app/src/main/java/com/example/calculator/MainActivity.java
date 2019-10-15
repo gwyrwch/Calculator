@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         calculator = ViewModelProviders.of(this).get(Calculator.class);
 
 
-        // todo: make if with current activity orientation
-        // todo: when changing orientation Activity recreates
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             //fixme: refactor this code and method setButtonMode
 

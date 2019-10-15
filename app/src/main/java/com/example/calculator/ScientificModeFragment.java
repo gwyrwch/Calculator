@@ -1,16 +1,13 @@
 package com.example.calculator;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -55,7 +52,6 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_scientific_mode, container, false);
 
         for (int i = 0; i < buttonIds.size(); i++) {
@@ -66,7 +62,7 @@ public class ScientificModeFragment extends Fragment implements View.OnClickList
         return v;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N) //todo: remove this by changing minApi
+
     @Override
     public void onClick(View v) {
         Calculator calculator = dataPasser.getCalculator();
