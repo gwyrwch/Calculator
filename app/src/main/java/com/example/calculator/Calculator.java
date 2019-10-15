@@ -18,6 +18,7 @@ public class Calculator {
     private boolean wasConstant;
 
     private static final String TAG = "Calculator";
+    // todo: 45 sin then you can write digits
 
     void Reset() {
         expression = new ArrayList<>();
@@ -33,6 +34,10 @@ public class Calculator {
 
     public Calculator() {
         Reset();
+    }
+
+    public Calculator(ArrayList<Double> expression, ArrayList<Double> inBracketsExp) {
+
     }
 
     private boolean lowPriority(BinOperation op) {

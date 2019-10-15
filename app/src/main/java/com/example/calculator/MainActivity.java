@@ -1,18 +1,17 @@
 package com.example.calculator;
 
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Application;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
+import java.util.ArrayList;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements OnExpressionPass {
     private TextView mainTextView;
@@ -41,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
             setButtonMode();
 
         }
-
-
     }
 
     private void setButtonMode() {
@@ -62,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
             currentFragment = newFragment;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(id, newFragment);
+
+            //fixme: try without this
             transaction.addToBackStack(null);
 
             transaction.commit();
@@ -84,11 +83,17 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
         return calculator;
     }
 
-    private Fragment getCurrentFragment(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
 
-        return getSupportFragmentManager()
-                .findFragmentByTag(fragmentTag);
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        savedInstanceState.putBoolean("MyBoolean", true);
+        savedInstanceState.putDouble("myDouble", 1.9);
+        savedInstanceState.putInt("MyInt", 1);
+        savedInstanceState.putString("MyString", "Welcome back to Android");
+        savedInstanceState.putStringArrayList("1", new ArrayList<String>());
     }
 }

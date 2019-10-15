@@ -44,7 +44,6 @@ public class Basic extends Fragment implements View.OnClickListener {
             add("button_sign");
             add("button_eq");
         }
-
     };
 
 
