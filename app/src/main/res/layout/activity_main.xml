@@ -7,16 +7,17 @@
     tools:context=".MainActivity"
     android:id="@+id/main_activity">
 
-    <fragment
-        android:id="@+id/basic"
-        android:name="com.example.calculator.Basic"
-        android:layout_width="match_parent"
-        android:layout_height="365dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_basic">
+<!--    <fragment-->
+<!--        android:id="@+id/basic"-->
+<!--        android:name="com.example.calculator.Basic"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="365dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:layout="@layout/fragment_basic">-->
 
-    </fragment>
+<!--    </fragment>-->
+
 
     <TextView
         android:id="@+id/mainTextView"
@@ -26,7 +27,7 @@
         android:textAlignment="textEnd"
         android:textColor="#A139AEDC"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/basic"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_frame"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -37,5 +38,13 @@
         android:text="@string/mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fragment_frame"
+        android:layout_width="match_parent"
+        android:layout_height="365dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
