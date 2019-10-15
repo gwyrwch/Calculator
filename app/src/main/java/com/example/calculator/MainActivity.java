@@ -12,14 +12,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends AppCompatActivity implements OnExpressionPass {
     private TextView mainTextView;
     private Calculator calculator;
     private Fragment currentFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +89,4 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     public Calculator getCalculator() {
         return calculator;
     }
-
-
 }

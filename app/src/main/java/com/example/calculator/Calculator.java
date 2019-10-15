@@ -379,7 +379,6 @@ public class Calculator extends ViewModel {
         return result;
     }
 
-
     public void display() {
         String result = "";
         switch (currentState) {
@@ -399,7 +398,6 @@ public class Calculator extends ViewModel {
                 result = secondOperand;
                 break;
         }
-
 
         currentDisplay.setValue(result);
     }
