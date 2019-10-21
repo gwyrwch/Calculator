@@ -20,7 +20,6 @@ public class Calculator extends ViewModel {
 
 
     private static final String TAG = "Calculator";
-    // todo: 45 sin then you can write digits
 
     void Reset() {
         expression = new ArrayList<>();
@@ -201,10 +200,12 @@ public class Calculator extends ViewModel {
 
     public void onUnOp(DoubleUnaryOperator operator) {
         Log.d(TAG, "passed unary operation " + " state = " + currentState.toString());
+        wasConstant = true;
+
         switch (currentState) {
             case FINISHED:
             case FIRST_OPERAND:
-                firstOperand = ((Double) operator.applyAsDouble(parse(firstOperand))).toString(); // todo change minsdk
+                firstOperand = ((Double) operator.applyAsDouble(parse(firstOperand))).toString();
                 break;
             case FIRST_OPERATION:
                 break;
