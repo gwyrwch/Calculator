@@ -16,7 +16,7 @@ public class Calculator extends ViewModel {
     private BinOperation currentOperation, inBracketsOperation;
     FSM currentState;
     private boolean wasConstant;
-    MutableLiveData<String> currentDisplay;
+    public MutableLiveData<String> currentDisplay;
 
 
     private static final String TAG = "Calculator";

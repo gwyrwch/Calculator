@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(id, newFragment);
 
-            //fixme: try without this
-            transaction.addToBackStack(null);
-
             transaction.commit();
         });
     }
@@ -81,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnExpressionPass 
     @Override
     public void onExpressionPass() {
         calculator.display();
-        System.out.println(calculator.currentDisplay.getValue());
-
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.calculator.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -21,25 +23,27 @@ public class DemoMainActivity extends AppCompatActivity implements OnExpressionP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo_main);
 
-        calculator = new Calculator();
+        calculator = ViewModelProviders.of(this).get(Calculator.class);
 
-        int width = getWindowManager().getDefaultDisplay().getWidth() / 7;
-        int height = getWindowManager().getDefaultDisplay().getHeight() / 4;
-
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        height = (int) ((height/displayMetrics.density)+0.5);
-        width = (int) ((width/displayMetrics.density)+0.5);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         mainTextView = findViewById(R.id.mainTextView);
+
+        calculator.currentDisplay.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                mainTextView.setText(s);
+            }
+        });
     }
 
     @Override
     public void onExpressionPass() {
-        mainTextView.setText(calculator.display());
+        calculator.display();
     }
 
     @Override
